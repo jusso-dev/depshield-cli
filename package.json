@@ -9,10 +9,22 @@
   "scripts": {
     "start": "node ./bin/depshield.js",
     "check": "node ./bin/depshield.js check --path .",
-    "apply:dry": "node ./bin/depshield.js apply --path . --dry-run"
+    "apply:dry": "node ./bin/depshield.js apply --path . --dry-run",
+    "security:lockfile": "npx lockfile-lint --path package-lock.json --allowed-hosts npm --validate-https --validate-package-names --validate-integrity",
+    "security:install": "npm ci",
+    "security:check": "node -e \"console.log('Review dependency diffs; avoid broad update commands; keep lockfiles committed.')\""
   },
   "engines": {
     "node": ">=18"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "trustedDependencies": [
+    "__depshield_no_bun_default_trust__"
+  ],
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+      "onFail": "warn"
+    }
+  }
 }
